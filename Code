@@ -1,0 +1,79 @@
+print("-----🎮Welcome to Tic-Tac-Toe game-----🎮")
+#Initialize score to zero
+Player_1_score=0
+Player_2_score=0
+tie_score=0
+#Input player names
+Player_1=input("Enter player_1 name (X):")
+Player_2=input("Enter player_2 name (O):")
+while True:
+    #Board for game
+    game_board=["1","2","3","4","5","6","7","8","9"]
+    #Display game_board
+    def showboard():
+        print()
+        print(game_board[0],"|",game_board[1],"|",game_board[2])
+        print("---------")
+        print(game_board[3],"|",game_board[4],"|",game_board[5])
+        print("---------")
+        print(game_board[6],"|",game_board[7],"|",game_board[8])
+        print()
+    #Cases of win
+    def winner(Player):
+        wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+        for winner in wins:
+            if game_board[winner[0]]==game_board[winner[1]]==game_board[winner[2]]==Player:
+                return True
+        return False
+    #Loop runs for 9 times
+    for i in range(0,9):
+        showboard()
+        #Checks player turns
+        if(i%2==0):
+            Player_name=Player_1
+            symbol="X"
+        else:
+            Player_name=Player_2
+            symbol="O"
+        while True:
+            try:
+                    position=int(input(f"{Player_name} enter your position number(1-9): "))
+            except ValueError:
+                    print("Invalid choice.Please enter a number between 1 and 9.")
+                    continue
+            if (position<1 or position>9):
+                print("Invalid position! Enter valid position")
+                continue
+            if game_board[position-1]=="X" or game_board[position-1]=="O":
+                print("Position is filled.Try another position")
+                continue
+            game_board[position-1]=symbol
+            break
+        if winner(symbol):
+            showboard()
+            print(f"Congratulations!!🎉 {Player_name} won!!")
+            #Update winner's score
+            if symbol == "X":
+                Player_1_score+=1
+            else:
+                Player_2_score+=1
+            break
+    else:
+                showboard()
+                print("It is a tie match!!")
+                tie_score += 1
+    #Display current scoreboard
+    print("🏆 -----SCOREBOARD----- 🏆")
+    print(f"{Player_1}: {Player_1_score}")
+    print(f"{Player_2}: {Player_2_score}")
+    print(f"Ties:{tie_score}")
+    replay=input("Do you want to play again (yes/no)").lower()
+    #End the game if players choose not to continue
+    if(replay!="yes"):
+        print("🏆 -----FINAL SCOREBOARD----- 🏆")
+        print(f"{Player_1}: {Player_1_score}")
+        print(f"{Player_2}: {Player_2_score}")
+        print(f"Ties: {tie_score}")
+        print("Thanks for playing!")
+        print("Game over")
+        break
